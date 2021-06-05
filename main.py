@@ -13,6 +13,25 @@ bot = commands.Bot(command_prefix=PREFIX)
 
 sleep = time.sleep(0.5)
 
+
+embed=discord.Embed(title="Pacifique Network", url="https://discord.gg/QPnFqvk", description="""**PacifiqueCreation** est une __fédération Discord__, une __communauté discord__ dédié et fondé **__principalement dans un but d'entraide pour tout utilisateurs Discord.__**
+    **Pour vous aider dans des démarches de créations/présentations de discord complètes et personnalisés.**""", color=0xfd9c6e)
+
+# Add author, thumbnail, fields, and footer to the embed
+embed.set_author(name="Pacifique Création", url="https://discord.gg/QPnFqvk")
+
+#embed.set_thumbnail(url="https://i.imgur.com/axLm3p6.jpeg")
+
+embed.add_field(name="__**Nous proposons des services tels que :**__", value=None, inline=False) 
+embed.add_field(name=":gear: : __Création et développement de **serveur discord**__", value=None, inline=False)
+embed.add_field(name=":gear: : __**Création et développement** spécial de **votre** propre **bot discord.**__", value=None, inline=False)
+embed.add_field(name=":gear: : __Création et développement de **graphismes**__", value=None, inline=False)
+embed.add_field(name=":gear: : __Création et développement d'une __**vidéo avec montage** pour la présentation de votre serveur/bot discord/autre chose sous __format vidéo.__", value=None, inline=False)
+embed.add_field(name="Tout cela est conçu par des __personnes professionnelles, compétentes et expérimentés dans leur(s) domaine(s).__", value=None, inline=False)
+embed.add_field(name="__La **PacifiqueCreation** propose des services et des tarifs avec le système network affilié aux communautés créés ou en payant directement le concepteur.__", value=None, inline=False)
+
+embed.set_footer(text="Powered by Fusity.tar.gz and ender_creeps")
+
 @bot.event
 async def on_ready():
     print('Logged as ')
@@ -49,27 +68,26 @@ async def on_guild_channel_delete(channel):
 
     if not network_channel:
         channel = await guild.create_text_channel(name="network", category=None, position=1)
-        await channel.send("""***La PacifiqueCreation :***
+        await channel.send(embed=embed)
 
-**PacifiqueCreation** est une __fédération Discord__, une __communauté discord__ dédié et fondé **__principalement dans un but d'entraide pour tout utilisateurs Discord.__**
-**Pour vous aider dans des démarches de créations/présentations de discord complètes et personnalisés.**
+@bot.event
+async def on_message_delete(message):
+    guild = message.guild
+    channel = discord.utils.get(guild.text_channels, name="network", category=None)
 
-__**Nous proposons des services tels que :**__
+    
+    if not message.channel == embed and message.channel == channel:
+        await channel.send(embed=embed)
 
-:gear: : __Création et développement de **serveur discord**__
+@bot.event
+async def on_message(message):
+    guild = message.guild
+    channel = discord.utils.get(guild.text_channels, name="network", category=None)
+    author = message.author
 
-:gear: : __**Création et développement** spécial de **votre** propre **bot discord.**__
-
-:gear: : __Création et développement de **graphismes**__ 
-
-:gear: : __Création et développement d'une __**vidéo avec montage** pour la présentation de votre serveur/bot discord/autre chose sous __format vidéo.__
-
-Tout cela est conçu par des __personnes professionnelles, compétentes et expérimentés dans leur(s) domaine(s).__
-
-__La **PacifiqueCreation** propose des services et des tarfis avec le système network affilé aux communautés créés ou en payant directement le concepteur.__
-
-**__DISCORD :__** https://discord.gg/QPnFqvk""")
- 
+    if not message.author.bot and message.channel == channel:
+        await message.channel.purge(limit=None)
+        await message.channel.send(embed=embed)
 
 @bot.command()
 async def hello(message):
