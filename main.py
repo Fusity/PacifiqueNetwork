@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = str(input("Set your token here :\n>>>"))
 PREFIX = os.getenv('COMMAND_PREFIX')
 
 bot = commands.Bot(command_prefix=PREFIX)
